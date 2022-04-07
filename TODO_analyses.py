@@ -8,54 +8,52 @@ import spacy
 from collections import Counter
 nlp = spacy.load('en_core_web_sm')
 
-if __name__ == "__main__":
-    with open("data/preprocessed/train/sentences.txt") as sent_file:
-        train_sentences = sent_file.read()
 
-    doc = nlp(train_sentences)
-    sentences = doc.sents
-    num_sents = len(list(sentences))
-    print(num_sents)
-    # for sentence in sentences:
-    #     print()
-    #     print(sentence)
-    #     for token in sentence:
-    #         print(token.text)
+def tokenize(dataset):
+    doc = nlp(dataset)
+    sents = doc.sents
+    return doc, sents
 
-    word_frequencies = Counter()
 
+def count(dataset, show=True):
+    doc, sents = tokenize(dataset)
+    num_sents = len(list(sents))
+
+    frequencies = Counter()
     for sentence in doc.sents:
         words = []
         for token in sentence:
             # Let's filter out punctuation
             if not token.is_punct:
                 words.append(token.text)
-        word_frequencies.update(words)
+        frequencies.update(words)
 
-    # print(word_frequencies)
+    # Remove line endings
+    frequencies.pop('\n')
 
-    num_tokens = len(doc) #amount of tokens is with the punctuation
-    num_words = sum(word_frequencies.values()) #amount of words is the amount of tokens without the puctuation
-    num_types = len(word_frequencies.keys()) #amount of keys is the amount of different words
+    num_tokens = len(doc)                   # amount of tokens is with the punctuation
+    num_words = sum(frequencies.values())   # amount of words is the amount of tokens without the punctuation
+    num_types = len(frequencies.keys())     # amount of keys is the amount of different words
+    avg_words = num_words / num_sents       # number of words (without punctuation) divided by the number of sentences)
+    avg_len = sum([len(word)*frequencies[word] for word in frequencies.keys()]) / num_words
 
-    print(num_tokens, num_words, num_types)
+    if show is True:
+        print("Number of tokens: ", num_tokens, "\n",
+              "Number of words: ", num_words, "\n",
+              "Number of types: ", num_types, "\n",
+              "Average number of words per sentence: ", round(avg_words, 3), "\n",
+              "Average word length: ", round(avg_len, 3))
 
-    average_word = num_words/num_sents #average is the number of words (without puctuation divided by the number of sentences)
+    return num_tokens, num_words, num_types, avg_words, avg_len
 
-    # Average word length
-    all_words = list(word_frequencies)
-    print(word_frequencies)
-    print(list(word_frequencies))
 
-    all_lengths = []
-    num_of_strings = len(all_words)
+if __name__ == "__main__":
+    with open("data/preprocessed/train/sentences.txt") as sent_file:
+        dataset = sent_file.read()
 
-    for item in all_words:
-        string_size = len(item)
-        all_lengths.append(string_size)
-        total_size = sum(all_lengths)
-    ave_size = float(total_size) / float(num_of_strings)
-    print(ave_size)
+    (out) = count(dataset)
+
+
 
 
 
