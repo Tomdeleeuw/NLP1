@@ -4,19 +4,15 @@
 ## '\n' moet er uit
 ## Voor average alle worden tellen
 
+
 import spacy
+import pandas as pd
 from collections import Counter
 nlp = spacy.load('en_core_web_sm')
 
 
-def tokenize(dataset):
-    doc = nlp(dataset)
+def tokenization(doc, show=True):
     sents = doc.sents
-    return doc, sents
-
-
-def count(dataset, show=True):
-    doc, sents = tokenize(dataset)
     num_sents = len(list(sents))
 
     frequencies = Counter()
@@ -29,7 +25,7 @@ def count(dataset, show=True):
         frequencies.update(words)
 
     # Remove line endings
-    frequencies.pop('\n')
+    # frequencies.pop('\n')
 
     num_tokens = len(doc)                   # amount of tokens is with the punctuation
     num_words = sum(frequencies.values())   # amount of words is the amount of tokens without the punctuation
@@ -47,11 +43,32 @@ def count(dataset, show=True):
     return num_tokens, num_words, num_types, avg_words, avg_len
 
 
+def pos(doc):
+    tags = {}
+    for token in doc:
+        print(token.text, token.pos_, token.tag_)
+        if token.tag_ not in tags:
+            tags[token.tag_] = [token]
+        else:
+            tags[token.tag_].append(token)
+    for tag in tags:
+        print(tag, len(tags[tag]))
+    print(tags["NN"])
+
+
 if __name__ == "__main__":
     with open("data/preprocessed/train/sentences.txt") as sent_file:
         dataset = sent_file.read()
 
-    (out) = count(dataset)
+    dataset = dataset.replace('\n', '')
+    # dataset = dataset.replace('"', '')
+    # dataset = dataset.replace("-", '')
+
+    doc = nlp(dataset)
+    print(doc)
+    # (out) = tokenization(doc)
+
+    pos(doc)
 
 
 
