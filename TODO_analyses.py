@@ -54,10 +54,35 @@ def pos(doc):
     for tag in tags:
         print(tag, len(tags[tag]))
     print(tags["NN"])
+    print(len(tags["NN"]))
+
+def ngrams(doc, n):
+    # res = Counter(doc[idx : idx + n] for idx in range(len(doc) - n))
+    # print(str(dict(res)))
+    frequencies = Counter()
+    words = []
+    for i in range(len(doc)-n):
+        # Let's filter out punctuation
+        if not doc[i].is_punct:
+            words.append(doc[i:i+n].text)
+    frequencies.update(words)
+    print(frequencies)
+
+    posFrequencies = Counter()
+    pos = []
+    for i, token in enumerate(doc):
+        if i < len(doc)-n:
+            string = ""
+            for j in range(n):
+                string += doc[i+j].pos_
+            pos.append(string)
+    posFrequencies.update(pos)
+    print(posFrequencies)
+
 
 
 if __name__ == "__main__":
-    with open("data/preprocessed/train/sentences.txt") as sent_file:
+    with open("data/preprocessed/train/sentences.txt", encoding='cp1252', errors='ignore') as sent_file:
         dataset = sent_file.read()
 
     dataset = dataset.replace('\n', '')
@@ -65,10 +90,12 @@ if __name__ == "__main__":
     # dataset = dataset.replace("-", '')
 
     doc = nlp(dataset)
-    print(doc)
+    #print(doc)
     # (out) = tokenization(doc)
 
-    pos(doc)
+    #pos(doc)
+    #tokenization(doc)
+    ngrams(doc, 2)
 
 
 
