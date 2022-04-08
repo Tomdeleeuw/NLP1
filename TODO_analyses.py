@@ -24,9 +24,6 @@ def tokenization(doc, show=True):
                 words.append(token.text)
         frequencies.update(words)
 
-    # Remove line endings
-    # frequencies.pop('\n')
-
     num_tokens = len(doc)                   # amount of tokens is with the punctuation
     num_words = sum(frequencies.values())   # amount of words is the amount of tokens without the punctuation
     num_types = len(frequencies.keys())     # amount of keys is the amount of different words
@@ -40,35 +37,60 @@ def tokenization(doc, show=True):
               "Average number of words per sentence: ", round(avg_words, 3), "\n",
               "Average word length: ", round(avg_len, 3))
 
-    return num_tokens, num_words, num_types, avg_words, avg_len
+    return [num_tokens, num_words, num_types, avg_words, avg_len]
 
 
 def pos(doc):
     tags = {}
+    uni = {}
     for token in doc:
-        print(token.text, token.pos_, token.tag_)
         if token.tag_ not in tags:
             tags[token.tag_] = [token]
+            uni[token.tag_] = token.pos_
         else:
             tags[token.tag_].append(token)
+
+    # Create DataFrame object with finegrained tag, universal tag and occurrences
+    data = pd.DataFrame({"tag": tags.keys(), "pos": [uni[tag] for tag in tags],
+                         "occ": [len(tags[tag]) for tag in tags]})
+
+    # Add relative frequency
+    data['freq'] = [round(data.loc[i, 'occ'] / sum(data['occ']), 4) for i in data.index]
+
+    # Find most frequent and infrequent words for each tag
+    common_words = []
+    rare_words = []
     for tag in tags:
-        print(tag, len(tags[tag]))
-    print(tags["NN"])
+        frequencies = Counter()
+        tokens = []
+        for token in tags[tag]:
+            tokens.append(token.text)
+        frequencies.update(tokens)
+
+        common_words.append([i[0] for i in frequencies.most_common(3)])
+        rare_words.append([frequencies.most_common()[-1][0]])
+
+    # Add common and uncommon words to dataframe
+    data['common'] = common_words
+    data['rare'] = rare_words
+
+    # Sort on relative frequency
+    data.sort_values("freq", ascending=False, inplace=True, ignore_index=True)
+
+    return data
 
 
 if __name__ == "__main__":
     with open("data/preprocessed/train/sentences.txt") as sent_file:
         dataset = sent_file.read()
 
-    dataset = dataset.replace('\n', '')
-    # dataset = dataset.replace('"', '')
-    # dataset = dataset.replace("-", '')
+    # Replace line endings by blank space
+    dataset = dataset.replace('\n', ' ')
 
     doc = nlp(dataset)
-    print(doc)
-    # (out) = tokenization(doc)
-
-    pos(doc)
+    tokenization(doc)
+    data = pos(doc)
+    print(data)
 
 
 
