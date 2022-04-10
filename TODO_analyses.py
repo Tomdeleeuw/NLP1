@@ -97,16 +97,14 @@ def ngrams(doc, n):
     posFrequencies.update(pos)
     print(posFrequencies)
 
+
 def entities(doc):
-    ents = []
     entities = []
     frequencies = Counter()
     for i, sentence in enumerate(doc.sents):
         if i < 5:
             for token in sentence:
                 entities.append(token.ent_type_)
-                if token.ent_type_ != "":
-                    ents.append(token)
 
     frequencies.update(entities)
     print(frequencies)
@@ -126,6 +124,7 @@ def entities2(doc):
     frequencies.update(entities)
     print(frequencies)
     print(ents)
+
 
 if __name__ == "__main__":
     with open("data/preprocessed/train/sentences.txt", encoding='cp1252', errors='ignore') as sent_file:
