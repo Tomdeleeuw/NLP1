@@ -85,7 +85,7 @@ def ngrams(doc, n):
         if i < len(doc)-n:
             if not doc[i].is_punct:
                 words.append(doc[i:i+n].text)
-            
+
             string = ""
             for j in range(n):
                 string += doc[i+j].pos_
@@ -95,6 +95,18 @@ def ngrams(doc, n):
     print(frequencies)
     posFrequencies.update(pos)
     print(posFrequencies)
+
+def entities(doc):
+    entities = []
+    frequencies = Counter()
+    for i, sentence in enumerate(doc.sents):
+        if i < 5:
+            for token in sentence:
+                entities.append(token.ent_type_)
+
+    frequencies.update(entities)
+    print(frequencies)
+
 
 if __name__ == "__main__":
     with open("data/preprocessed/train/sentences.txt", encoding='cp1252', errors='ignore') as sent_file:
@@ -109,5 +121,5 @@ if __name__ == "__main__":
     print(data)
     ngrams(doc,2)
     ngrams(doc,3)
-
+    entities(doc)
 
