@@ -5,6 +5,7 @@
 import spacy
 import pandas as pd
 from collections import Counter
+from spacy import displacy
 nlp = spacy.load('en_core_web_sm')
 
 
@@ -108,6 +109,17 @@ def entities(doc):
     print(frequencies)
 
 
+def entities2(doc):
+    entities = []
+    frequencies = Counter()
+    for i, sentence in enumerate(doc.sents):
+        if i < 5:
+            for ent in sentence.ents:
+                entities.append(ent.label_)
+
+    frequencies.update(entities)
+    print(frequencies)
+
 if __name__ == "__main__":
     with open("data/preprocessed/train/sentences.txt", encoding='cp1252', errors='ignore') as sent_file:
         dataset = sent_file.read()
@@ -116,10 +128,10 @@ if __name__ == "__main__":
     dataset = dataset.replace('\n', ' ')
 
     doc = nlp(dataset)
-    tokenization(doc)
-    data = pos(doc)
-    print(data)
-    ngrams(doc,2)
-    ngrams(doc,3)
+    # tokenization(doc)
+    # data = pos(doc)
+    # print(data)
+    # ngrams(doc,2)
+    # ngrams(doc,3)
     entities(doc)
-
+    entities2(doc)
