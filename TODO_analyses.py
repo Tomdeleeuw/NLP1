@@ -5,8 +5,8 @@
 import spacy
 import pandas as pd
 from collections import Counter
-from spacy import displacy
 nlp = spacy.load('en_core_web_sm')
+# nlp.add_pipe("merge_entities")
 
 
 def tokenization(doc, show=True):
@@ -98,27 +98,34 @@ def ngrams(doc, n):
     print(posFrequencies)
 
 def entities(doc):
+    ents = []
     entities = []
     frequencies = Counter()
     for i, sentence in enumerate(doc.sents):
         if i < 5:
             for token in sentence:
                 entities.append(token.ent_type_)
+                if token.ent_type_ != "":
+                    ents.append(token)
 
     frequencies.update(entities)
     print(frequencies)
+    print(ents)
 
 
 def entities2(doc):
+    ents = []
     entities = []
     frequencies = Counter()
     for i, sentence in enumerate(doc.sents):
         if i < 5:
             for ent in sentence.ents:
                 entities.append(ent.label_)
+                ents.append(ent.text)
 
     frequencies.update(entities)
     print(frequencies)
+    print(ents)
 
 if __name__ == "__main__":
     with open("data/preprocessed/train/sentences.txt", encoding='cp1252', errors='ignore') as sent_file:
@@ -128,10 +135,10 @@ if __name__ == "__main__":
     dataset = dataset.replace('\n', ' ')
 
     doc = nlp(dataset)
-    # tokenization(doc)
-    # data = pos(doc)
-    # print(data)
+    tokenization(doc)
+    data = pos(doc)
+    print(data)
     # ngrams(doc,2)
     # ngrams(doc,3)
-    entities(doc)
+    # entities(doc)
     entities2(doc)
