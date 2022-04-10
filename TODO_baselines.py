@@ -25,9 +25,6 @@ def majority_baseline(train_sentences, train_labels, testinput, testlabels):
     return accuracy, predictions
 
 
-
-
-
 if __name__ == '__main__':
     train_path = "data/preprocessed/train"
     dev_path = "data/preprocessed/dev"
@@ -40,7 +37,6 @@ if __name__ == '__main__':
 
     with open(train_path + "labels.txt") as label_file:
         train_labels = label_file.readlines()
-
 
     with open(dev_path + "sentences.txt") as dev_file:
         dev_sentences = dev_file.readlines()
