@@ -9,6 +9,7 @@ nlp = spacy.load('en_core_web_sm')
 # nlp.add_pipe("merge_entities")
 
 
+# Task 1
 def tokenization(doc, show=True):
     sents = doc.sents
     num_sents = len(list(sents))
@@ -38,6 +39,7 @@ def tokenization(doc, show=True):
     return [num_tokens, num_words, num_types, avg_words, avg_len]
 
 
+# Task 2
 def pos(doc):
     tags = {}
     uni = {}
@@ -77,6 +79,8 @@ def pos(doc):
 
     return data
 
+
+# Task 3
 def ngrams(doc, n):
     frequencies = Counter()
     words = []
@@ -97,7 +101,41 @@ def ngrams(doc, n):
     posFrequencies.update(pos)
     print(posFrequencies)
 
+# Task 4
+def lemmatization(doc):
 
+    lemmas = {}
+    for token in doc:
+        # Check if lemma is the same as the original word
+        if not token.lower_ == token.lemma_:
+            if token.lemma_ not in lemmas.keys():
+                lemmas[token.lemma_] = [token.lower_]
+            else:
+                lemmas[token.lemma_].append(token.lower_)
+
+    # Find examples of more than 2 inflections
+    lemma_inflections = {}
+    for lemma, inflection in lemmas.items():
+        if len(set(inflection)) > 2:
+            if lemma not in lemma_inflections.keys():
+                lemma_inflections[lemma] = set(inflection)
+            else:
+                lemma_inflections[lemma].add(set(inflection))
+
+    selected_lemma = "run"
+    inflections = lemma_inflections["run"]  # run {'runs', 'running', 'ran'}
+
+    # Find sentence with inflection in doc
+    inflected_sentences = []
+    for sentence in doc.sents:
+        for token in sentence:
+            if token.lower_ in inflections:
+                inflected_sentences.append(sentence)
+
+    return selected_lemma, inflections, inflected_sentences
+
+
+# Task 5
 def entities(doc):
     entities = []
     frequencies = Counter()
