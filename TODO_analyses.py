@@ -101,6 +101,7 @@ def ngrams(doc, n):
     posFrequencies.update(pos)
     print(posFrequencies)
 
+
 # Task 4
 def lemmatization(doc):
 
@@ -179,3 +180,7 @@ if __name__ == "__main__":
     # ngrams(doc,3)
     # entities(doc)
     entities2(doc)
+
+    selected_lemma, inflections, inflected_sentences = lemmatization(doc)
+    print(selected_lemma, inflections)
+    [print(sen) for sen in inflected_sentences]
