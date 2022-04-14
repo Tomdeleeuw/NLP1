@@ -7,6 +7,8 @@
 #from model.data_loader import DataLoader
 from collections import Counter
 from random import sample
+from sklearn import metrics
+from itertools import chain
 # Each baseline returns predictions for the test data. The length and frequency baselines determine a threshold using the development data.
 
 def majority_baseline(train_sentences, train_labels, testinput, testlabels):
@@ -30,15 +32,11 @@ def majority_baseline(train_sentences, train_labels, testinput, testlabels):
         true_labels.append(tokens)
 
     # TODO: calculate accuracy for the test input
-    right_labels = 0
-    total_labels = 0
-    for i, sentence in enumerate(predictions):
-        for j, token in enumerate(sentence):
-            total_labels += 1
-            if predictions[i][j] == true_labels[i][j]:
-                right_labels += 1
+    predictions = list(chain.from_iterable(predictions))
+    true_labels = list(chain.from_iterable(true_labels))
+    accuracy = metrics.accuracy_score(true_labels,predictions)
 
-    return right_labels/total_labels, predictions
+    return accuracy, predictions
 
 
 def random_baseline(train_sentence, train_labels, testinput, testlabels):
@@ -66,12 +64,9 @@ def random_baseline(train_sentence, train_labels, testinput, testlabels):
     total_labels = 0
     accuracy = 0
     for k in range(10):
-        for i, sentence in enumerate(predictions):
-            for j, token in enumerate(sentence):
-                total_labels += 1
-                if predictions[i][j] == true_labels[i][j]:
-                    right_labels += 1
-        accuracy += right_labels/total_labels
+        predictions = list(chain.from_iterable(predictions))
+        true_labels = list(chain.from_iterable(true_labels))
+        accuracy += metrics.accuracy_score(true_labels,predictions)
     accuracy /= 10
 
     return accuracy, predictions
