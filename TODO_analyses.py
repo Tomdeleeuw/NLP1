@@ -147,7 +147,7 @@ def entities(doc):
 
     frequencies.update(entities)
     print(frequencies)
-    print(ents)
+    print(entities)
 
 
 def entities2(doc):
