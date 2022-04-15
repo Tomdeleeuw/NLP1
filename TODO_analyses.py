@@ -4,6 +4,8 @@
 
 import spacy
 import pandas as pd
+import numpy as np
+import plotly.express as px
 from collections import Counter
 nlp = spacy.load('en_core_web_sm')
 # nlp.add_pipe("merge_entities")
