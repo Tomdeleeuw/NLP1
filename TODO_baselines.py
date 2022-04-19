@@ -9,6 +9,7 @@ from collections import Counter
 from random import sample
 from sklearn import metrics
 from itertools import chain
+import numpy as np
 # Each baseline returns predictions for the test data. The length and frequency baselines determine a threshold using the development data.
 
 def majority_baseline(train_sentences, train_labels, testinput, testlabels):
@@ -35,7 +36,19 @@ def majority_baseline(train_sentences, train_labels, testinput, testlabels):
     true_labels = list(chain.from_iterable(true_labels))
     accuracy = metrics.accuracy_score(true_labels,predictions)
 
-    return accuracy, predictions
+    # calculate matrix for further calculations
+    m = np.zeros([2,2])
+    for i in range(len(predictions)):
+        if predictions[i] == "N" and predictions[i] == true_labels[i]:
+            m[0,0] += 1
+        elif predictions[i] == "N" and predictions[i] != true_labels[i]:
+            m[1,0] += 1
+        elif predictions[i] == "C" and predictions[i] == true_labels[i]:
+            m[1,1] += 1
+        else:
+            m[0,1] += 1
+
+    return accuracy, m
 
 
 def random_baseline(train_sentence, train_labels, testinput, testlabels):
@@ -48,25 +61,36 @@ def random_baseline(train_sentence, train_labels, testinput, testlabels):
 
     unique_labels = set(labels)
 
-    predictions = []
-    true_labels = []
-    for instance in testlabels:
-        tokens = instance.split(" ")
-        tokens = [t.replace('\n', '') for t in tokens]
-        instance_predictions = [sample([*unique_labels],1)[0] for t in tokens]
-        predictions.append(instance_predictions)
-        true_labels.append(tokens)
-
-    # calculate accuracy for the test input
     accuracy = 0
-
+    m = np.zeros([2,2])
     for k in range(10):
+        predictions = []
+        true_labels = []
+        for instance in testlabels:
+            tokens = instance.split(" ")
+            tokens = [t.replace('\n', '') for t in tokens]
+            instance_predictions = [sample([*unique_labels],1)[0] for t in tokens]
+            predictions.append(instance_predictions)
+            true_labels.append(tokens)
+
+        # calculate accuracy for the test input
         predictions = list(chain.from_iterable(predictions))
         true_labels = list(chain.from_iterable(true_labels))
         accuracy += metrics.accuracy_score(true_labels,predictions)
+
+        for i in range(len(predictions)):
+            if predictions[i] == "N" and predictions[i] == true_labels[i]:
+                m[0,0] += 1
+            elif predictions[i] == "N" and predictions[i] != true_labels[i]:
+                m[1,0] += 1
+            elif predictions[i] == "C" and predictions[i] == true_labels[i]:
+                m[1,1] += 1
+            else:
+                m[0,1] += 1
+
     accuracy /= 10
 
-    return accuracy, predictions
+    return accuracy, m
 
 
 def length_baseline(threshold, sentences, labels):
@@ -89,7 +113,18 @@ def length_baseline(threshold, sentences, labels):
     true_labels = list(chain.from_iterable(true_labels))
     accuracy = metrics.accuracy_score(true_labels,predictions)
 
-    return accuracy
+    m = np.zeros([2,2])
+    for i in range(len(predictions)):
+        if predictions[i] == "N" and predictions[i] == true_labels[i]:
+            m[0,0] += 1
+        elif predictions[i] == "N" and predictions[i] != true_labels[i]:
+            m[1,0] += 1
+        elif predictions[i] == "C" and predictions[i] == true_labels[i]:
+            m[1,1] += 1
+        else:
+            m[0,1] += 1
+
+    return accuracy, m
 
 
 def frequency_baseline(threshold, sentences, labels):
@@ -120,7 +155,18 @@ def frequency_baseline(threshold, sentences, labels):
     true_labels = list(chain.from_iterable(true_labels))
     accuracy = metrics.accuracy_score(true_labels,predictions)
 
-    return accuracy
+    m = np.zeros([2,2])
+    for i in range(len(predictions)):
+        if predictions[i] == "N" and predictions[i] == true_labels[i]:
+            m[0,0] += 1
+        elif predictions[i] == "N" and predictions[i] != true_labels[i]:
+            m[1,0] += 1
+        elif predictions[i] == "C" and predictions[i] == true_labels[i]:
+            m[1,1] += 1
+        else:
+            m[0,1] += 1
+
+    return accuracy, m
 
 
 def optimal_threshold(type, dev_sentences, dev_labels):
@@ -136,9 +182,9 @@ def optimal_threshold(type, dev_sentences, dev_labels):
         accuracy = 0
 
         for i in range(max_len):
-            if length_baseline(i, dev_sentences, dev_labels) > accuracy:
+            if length_baseline(i, dev_sentences, dev_labels)[0] > accuracy:
                 threshold = i
-                accuracy = length_baseline(i, dev_sentences, dev_labels)
+                accuracy = length_baseline(i, dev_sentences, dev_labels)[0]
 
     else:
         words = []
@@ -153,11 +199,37 @@ def optimal_threshold(type, dev_sentences, dev_labels):
         accuracy = 0
 
         for i in range(max_freq):
-            if frequency_baseline(i, dev_sentences, dev_labels) > accuracy:
+            if frequency_baseline(i, dev_sentences, dev_labels)[0] > accuracy:
                 threshold = i
-                accuracy = frequency_baseline(i, dev_sentences, dev_labels)
+                accuracy = frequency_baseline(i, dev_sentences, dev_labels)[0]
 
     return threshold
+
+
+def statistics(m):
+    precision_n = m[0,0] / sum(m[:,0])
+    recall_n = m[0,0] / sum(m[0,:])
+    f1_n = 2*precision_n*recall_n / (precision_n+recall_n)
+
+    precision_c = m[1,1] / sum(m[:,1])
+    recall_c = m[1,1] / sum(m[1,:])
+    f1_c = 2*precision_c*recall_c / (precision_c+recall_c)
+
+
+    return precision_n, recall_n, f1_n, precision_c, recall_c, f1_c
+
+
+def weighted_average(f1_n, f1_c, testlabels):
+    labels = []
+    for sentence in testlabels:
+        test_tokens = sentence.split(" ")
+        for token in test_tokens:
+            token = token.replace('\n', '')
+            labels.append(token)
+
+    weighted_average = (f1_n*labels.count("N") + f1_c*labels.count("C")) / len(labels)
+
+    return weighted_average
 
 
 if __name__ == '__main__':
@@ -185,14 +257,29 @@ if __name__ == '__main__':
     with open(test_path + "/labels.txt", encoding='cp1252', errors='ignore') as test_label_file:
         testlabels = test_label_file.readlines()
 
-    accuracy_majority, predictions_majority = majority_baseline(train_sentences, train_labels, testinput, testlabels)
-    accuracy_random, predictions_random = random_baseline(train_sentences, train_labels, testinput, testlabels)
+    accuracy_majority, majority_m = majority_baseline(train_sentences, train_labels, testinput, testlabels)
+    accuracy_random, random_m = random_baseline(train_sentences, train_labels, testinput, testlabels)
     threshold_length = optimal_threshold("length", dev_sentences, dev_labels)
-    accuracy_length = length_baseline(threshold_length, testinput, testlabels)
+    accuracy_length, length_m = length_baseline(threshold_length, testinput, testlabels)
     threshold_frequency = optimal_threshold("frequency", dev_sentences, dev_labels)
-    accuracy_frequency = frequency_baseline(threshold_frequency, testinput, testlabels)
+    accuracy_frequency, frequency_m = frequency_baseline(threshold_frequency, testinput, testlabels)
+
     # TODO: output the predictions in a suitable way so that you can evaluate them
-    print("Majority baseline: ", accuracy_majority)
-    print("Random baseline: ", accuracy_random)
-    print("Length baseline: ", threshold_length, accuracy_length)
-    print("Frequency baseline: ", threshold_frequency, accuracy_frequency)
+    print("Majority baseline accuracy: ", accuracy_majority)
+    print("Random baseline accuracy: ", accuracy_random)
+    print("Length baseline accuracy: ", threshold_length, accuracy_length)
+    print("Frequency baseline accuracy: ", threshold_frequency, accuracy_frequency)
+
+    print("Majority baseline class N (precision, recall, f1): ", statistics(majority_m)[0:3])
+    print("Majority baseline class C (precision, recall, f1): ", statistics(majority_m)[3:6])
+    print("Random baseline class N (precision, recall, f1): ", statistics(random_m)[0:3])
+    print("Random baseline class C (precision, recall, f1): ", statistics(random_m)[3:6])
+    print("Length baseline class N (precision, recall, f1): ", statistics(length_m)[0:3])
+    print("Length baseline class C (precision, recall, f1): ", statistics(length_m)[3:6])
+    print("Frequency baseline class N (precision, recall, f1): ", statistics(frequency_m)[0:3])
+    print("Frequency baseline class C (precision, recall, f1): ", statistics(frequency_m)[3:6])
+
+    print("Majority baseline weighted average: ", weighted_average(statistics(majority_m)[2], statistics(majority_m)[5], testlabels))
+    print("Random baseline weighted average: ", weighted_average(statistics(random_m)[2], statistics(random_m)[5], testlabels))
+    print("Length baseline weighted average: ", weighted_average(statistics(length_m)[2], statistics(length_m)[5], testlabels))
+    print("Frequency baseline weighted average: ", weighted_average(statistics(frequency_m)[2], statistics(frequency_m)[5], testlabels))
