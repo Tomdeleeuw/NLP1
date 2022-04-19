@@ -220,6 +220,9 @@ def statistics(m):
 
 
 def weighted_average(f1_n, f1_c, testlabels):
+    if not f1_c > 0 :
+        f1_c = 0
+
     labels = []
     for sentence in testlabels:
         test_tokens = sentence.split(" ")
