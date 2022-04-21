@@ -267,11 +267,21 @@ if __name__ == '__main__':
     threshold_frequency = optimal_threshold("frequency", dev_sentences, dev_labels)
     accuracy_frequency, frequency_m = frequency_baseline(threshold_frequency, testinput, testlabels)
 
+    dev_accuracy_majority, dev_majority_m = majority_baseline(train_sentences, train_labels, dev_sentences, dev_labels)
+    dev_accuracy_random, dev_random_m = random_baseline(train_sentences, train_labels, dev_sentences, dev_labels)
+    dev_accuracy_length, dev_length_m = length_baseline(threshold_length, dev_sentences, dev_labels)
+    dev_accuracy_frequency, dev_frequency_m = frequency_baseline(threshold_frequency, dev_sentences, dev_labels)
+
     # TODO: output the predictions in a suitable way so that you can evaluate them
     print("Majority baseline accuracy: ", accuracy_majority)
     print("Random baseline accuracy: ", accuracy_random)
     print("Length baseline accuracy: ", threshold_length, accuracy_length)
     print("Frequency baseline accuracy: ", threshold_frequency, accuracy_frequency)
+
+    print("Majority baseline on dev data accuracy: ", dev_accuracy_majority)
+    print("Random baseline on dev data accuracy: ", dev_accuracy_random)
+    print("Length baseline on dev data accuracy: ", threshold_length, dev_accuracy_length)
+    print("Frequency baseline on dev data accuracy: ", threshold_frequency, dev_accuracy_frequency)
 
     print("Majority baseline class N (precision, recall, f1): ", statistics(majority_m)[0:3])
     print("Majority baseline class C (precision, recall, f1): ", statistics(majority_m)[3:6])

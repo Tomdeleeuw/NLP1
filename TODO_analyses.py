@@ -90,8 +90,7 @@ def ngrams(doc, n):
     pos = []
     for i, token in enumerate(doc):
         if i < len(doc)-n:
-            if not doc[i].is_punct:
-                words.append(doc[i:i+n].text)
+            words.append(doc[i:i+n].text)
 
             string = ""
             for j in range(n):
@@ -99,9 +98,9 @@ def ngrams(doc, n):
             pos.append(string)
 
     frequencies.update(words)
-    print(frequencies)
+    print(frequencies.most_common(3))
     posFrequencies.update(pos)
-    print(posFrequencies)
+    print(posFrequencies.most_common(3))
 
 
 # Task 4
@@ -281,15 +280,15 @@ if __name__ == "__main__":
     dataset = dataset.replace('\n', ' ')
 
     doc = nlp(dataset)
-    # tokenization(doc)
-    # data = pos(doc)
-    # print(data)
-    # ngrams(doc,2)
-    # ngrams(doc,3)
-    # entities(doc)
-    # entities2(doc)
+    tokenization(doc)
+    data = pos(doc)
+    print(data)
+    ngrams(doc,2)
+    ngrams(doc,3)
+    entities(doc)
+    entities2(doc)
 
-    # selected_lemma, inflections, inflected_sentences = lemmatization(doc)
-    # print(selected_lemma, inflections)
-    # [print(sen) for sen in inflected_sentences]
+    selected_lemma, inflections, inflected_sentences = lemmatization(doc)
+    print(selected_lemma, inflections)
+    [print(sen) for sen in inflected_sentences]
     linguistic_characteristics()
