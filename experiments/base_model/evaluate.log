@@ -2,3 +2,123 @@
 2022-04-19 20:22:51,949:INFO: - done.
 2022-04-19 20:22:51,954:INFO: Starting evaluation
 2022-04-19 20:22:52,003:INFO: - Eval metrics : accuracy: 0.852 ; loss: 0.365
+2022-04-22 17:34:15,565:INFO: Creating the dataset...
+2022-04-22 17:34:15,566:INFO: - done.
+2022-04-22 17:34:15,570:INFO: Starting evaluation
+2022-04-22 17:34:15,587:INFO: - Eval metrics : accuracy: 0.852 ; loss: 0.365
+2022-04-22 18:26:24,537:INFO: Creating the dataset...
+2022-04-22 18:26:24,540:INFO: - done.
+2022-04-22 18:26:24,543:INFO: Starting evaluation
+2022-04-22 18:26:24,561:INFO: - Eval metrics : accuracy: 0.847 ; loss: 0.408
+2022-04-22 18:27:24,586:INFO: Creating the dataset...
+2022-04-22 18:27:24,588:INFO: - done.
+2022-04-22 18:27:24,595:INFO: Starting evaluation
+2022-04-22 18:27:24,632:INFO: - Eval metrics : accuracy: 0.860 ; loss: 0.403
+2022-04-22 18:28:06,036:INFO: Creating the dataset...
+2022-04-22 18:28:06,038:INFO: - done.
+2022-04-22 18:28:06,041:INFO: Starting evaluation
+2022-04-22 18:28:06,056:INFO: - Eval metrics : accuracy: 0.852 ; loss: 0.365
+2022-04-22 18:29:57,102:INFO: Creating the dataset...
+2022-04-22 18:29:57,104:INFO: - done.
+2022-04-22 18:29:57,109:INFO: Starting evaluation
+2022-04-22 18:29:57,132:INFO: - Eval metrics : accuracy: 0.794 ; loss: 0.444
+2022-04-22 18:30:32,692:INFO: Creating the dataset...
+2022-04-22 18:30:32,694:INFO: - done.
+2022-04-22 18:30:32,697:INFO: Starting evaluation
+2022-04-22 18:30:32,712:INFO: - Eval metrics : accuracy: 0.798 ; loss: 0.577
+2022-04-22 18:32:22,604:INFO: Creating the dataset...
+2022-04-22 18:32:22,606:INFO: - done.
+2022-04-22 18:32:22,609:INFO: Starting evaluation
+2022-04-22 18:32:22,628:INFO: - Eval metrics : accuracy: 0.845 ; loss: 0.334
+2022-04-22 18:33:08,484:INFO: Creating the dataset...
+2022-04-22 18:33:08,487:INFO: - done.
+2022-04-22 18:33:08,490:INFO: Starting evaluation
+2022-04-22 18:33:08,499:INFO: - Eval metrics : accuracy: 0.852 ; loss: 0.365
+2022-04-22 18:34:32,599:INFO: Creating the dataset...
+2022-04-22 18:34:32,601:INFO: - done.
+2022-04-22 18:34:32,604:INFO: Starting evaluation
+2022-04-22 18:34:32,613:INFO: - Eval metrics : accuracy: 0.852 ; loss: 0.365
+2022-04-22 18:35:03,237:INFO: Creating the dataset...
+2022-04-22 18:35:03,238:INFO: - done.
+2022-04-22 18:35:03,239:INFO: Starting evaluation
+2022-04-22 18:35:03,247:INFO: - Eval metrics : accuracy: 0.792 ; loss: 0.478
+2022-04-22 18:35:28,305:INFO: Creating the dataset...
+2022-04-22 18:35:28,306:INFO: - done.
+2022-04-22 18:35:28,308:INFO: Starting evaluation
+2022-04-22 18:35:28,335:INFO: - Eval metrics : accuracy: 0.834 ; loss: 0.445
+2022-04-22 18:36:24,255:INFO: Creating the dataset...
+2022-04-22 18:36:24,257:INFO: - done.
+2022-04-22 18:36:24,262:INFO: Starting evaluation
+2022-04-22 18:36:24,272:INFO: - Eval metrics : accuracy: 0.871 ; loss: 0.386
+2022-04-22 18:37:10,406:INFO: Creating the dataset...
+2022-04-22 18:37:10,408:INFO: - done.
+2022-04-22 18:37:10,415:INFO: Starting evaluation
+2022-04-22 18:37:10,425:INFO: - Eval metrics : accuracy: 0.837 ; loss: 0.344
+2022-04-22 18:38:09,640:INFO: Creating the dataset...
+2022-04-22 18:38:09,642:INFO: - done.
+2022-04-22 18:38:09,653:INFO: Starting evaluation
+2022-04-22 18:38:09,664:INFO: - Eval metrics : accuracy: 0.860 ; loss: 0.367
+2022-04-22 18:38:43,120:INFO: Creating the dataset...
+2022-04-22 18:38:43,121:INFO: - done.
+2022-04-22 18:38:43,132:INFO: Starting evaluation
+2022-04-22 18:38:43,161:INFO: - Eval metrics : accuracy: 0.861 ; loss: 0.310
+2022-04-22 18:39:25,575:INFO: Creating the dataset...
+2022-04-22 18:39:25,579:INFO: - done.
+2022-04-22 18:39:25,581:INFO: Starting evaluation
+2022-04-22 18:39:25,606:INFO: - Eval metrics : accuracy: 0.819 ; loss: 0.421
+2022-04-22 18:40:05,090:INFO: Creating the dataset...
+2022-04-22 18:40:05,092:INFO: - done.
+2022-04-22 18:40:05,123:INFO: Starting evaluation
+2022-04-22 18:40:05,140:INFO: - Eval metrics : accuracy: 0.871 ; loss: 0.294
+2022-04-22 18:41:14,661:INFO: Creating the dataset...
+2022-04-22 18:41:14,663:INFO: - done.
+2022-04-22 18:41:14,666:INFO: Starting evaluation
+2022-04-22 18:41:14,681:INFO: - Eval metrics : accuracy: 0.771 ; loss: 0.595
+2022-04-22 18:41:53,292:INFO: Creating the dataset...
+2022-04-22 18:41:53,294:INFO: - done.
+2022-04-22 18:41:53,297:INFO: Starting evaluation
+2022-04-22 18:41:53,317:INFO: - Eval metrics : accuracy: 0.860 ; loss: 0.403
+2022-04-22 18:42:25,291:INFO: Creating the dataset...
+2022-04-22 18:42:25,292:INFO: - done.
+2022-04-22 18:42:25,295:INFO: Starting evaluation
+2022-04-22 18:42:25,317:INFO: - Eval metrics : accuracy: 0.852 ; loss: 0.365
+2022-04-22 18:43:59,730:INFO: Creating the dataset...
+2022-04-22 18:43:59,732:INFO: - done.
+2022-04-22 18:43:59,735:INFO: Starting evaluation
+2022-04-22 18:43:59,744:INFO: - Eval metrics : accuracy: 0.798 ; loss: 0.577
+2022-04-22 18:44:31,111:INFO: Creating the dataset...
+2022-04-22 18:44:31,113:INFO: - done.
+2022-04-22 18:44:31,118:INFO: Starting evaluation
+2022-04-22 18:44:31,129:INFO: - Eval metrics : accuracy: 0.794 ; loss: 0.444
+2022-04-22 19:02:23,515:INFO: Creating the dataset...
+2022-04-22 19:02:23,517:INFO: - done.
+2022-04-22 19:02:23,520:INFO: Starting evaluation
+2022-04-22 19:02:23,536:INFO: - Eval metrics : accuracy: 0.796 ; loss: 0.487
+2022-04-22 19:04:19,934:INFO: Creating the dataset...
+2022-04-22 19:04:19,936:INFO: - done.
+2022-04-22 19:04:19,939:INFO: Starting evaluation
+2022-04-22 19:04:19,958:INFO: - Eval metrics : accuracy: 0.791 ; loss: 0.589
+2022-04-22 19:05:08,718:INFO: Creating the dataset...
+2022-04-22 19:05:08,720:INFO: - done.
+2022-04-22 19:05:08,723:INFO: Starting evaluation
+2022-04-22 19:05:08,750:INFO: - Eval metrics : accuracy: 0.789 ; loss: 0.717
+2022-04-22 19:07:22,907:INFO: Creating the dataset...
+2022-04-22 19:07:22,917:INFO: - done.
+2022-04-22 19:07:22,920:INFO: Starting evaluation
+2022-04-22 19:07:22,946:INFO: - Eval metrics : accuracy: 0.779 ; loss: 0.600
+2022-04-22 19:08:10,944:INFO: Creating the dataset...
+2022-04-22 19:08:10,947:INFO: - done.
+2022-04-22 19:08:10,950:INFO: Starting evaluation
+2022-04-22 19:08:10,963:INFO: - Eval metrics : accuracy: 0.847 ; loss: 0.408
+2022-04-22 19:09:59,053:INFO: Creating the dataset...
+2022-04-22 19:09:59,055:INFO: - done.
+2022-04-22 19:09:59,058:INFO: Starting evaluation
+2022-04-22 19:09:59,091:INFO: - Eval metrics : accuracy: 0.776 ; loss: 0.488
+2022-04-22 19:33:45,432:INFO: Creating the dataset...
+2022-04-22 19:33:45,434:INFO: - done.
+2022-04-22 19:33:45,437:INFO: Starting evaluation
+2022-04-22 19:33:45,456:INFO: - Eval metrics : accuracy: 0.794 ; loss: 0.444
+2022-04-22 19:34:52,084:INFO: Creating the dataset...
+2022-04-22 19:34:52,086:INFO: - done.
+2022-04-22 19:34:52,089:INFO: Starting evaluation
+2022-04-22 19:34:52,111:INFO: - Eval metrics : accuracy: 0.847 ; loss: 0.408
